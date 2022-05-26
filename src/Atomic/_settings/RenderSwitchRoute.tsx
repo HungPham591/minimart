@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 
 const RenderSwitchRoute = (routes: any) => {
 
-    routes = _.values(routes);
+    routes = Object.values(routes);
     return (
         <Routes>
             {

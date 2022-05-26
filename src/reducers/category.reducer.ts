@@ -1,6 +1,7 @@
 import { addCategoryRequest, addCategorySuccess, updateCategoryRequest, updateCategorySuccess, removeCategoryRequest, removeCategorySuccess, fetchCategoryRequest, fetchCategorySuccess } from './../actions/category.action';
 import { createSlice } from "@reduxjs/toolkit";
 import * as _ from 'lodash';
+import Helpers from '../commons/utils/Helpers';
 
 const initialState = {
     data: Array(),
@@ -14,16 +15,16 @@ export const CategoryReducer = createSlice({
         sortCategory: (state, action) => {
             const { name, sort } = action.payload;
             if (name) {
-                state.data = _.filter(state.data, item => {
+                state.data = state.data.filter(item => {
                     return item?.name.indexOf(name) > -1;
                 })
             }
             if (sort) {
                 switch (sort) {
-                    case 1: state.data = _.orderBy(state.data, ['name'], ['asc']); break;
-                    case 2: state.data = _.orderBy(state.data, ['name'], ['desc']); break;
-                    case 3: state.data = _.orderBy(state.data, ['id'], ['asc']); break;
-                    case 4: state.data = _.orderBy(state.data, ['id'], ['desc']); break;
+                    case 1: state.data = Helpers.sortAsc(state.data, 'name'); break;
+                    case 2: state.data = Helpers.sortDesc(state.data, 'name'); break;
+                    case 3: state.data = Helpers.sortAsc(state.data, 'id'); break;
+                    case 4: state.data = Helpers.sortDesc(state.data, 'id'); break;
                 }
             }
         }

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Constants from '../../../../../constants/constants';
 import { closeInputModal, selectLayout } from '../../../../../reducers/layout.reducer';
 import ClientInput from '../../atoms/Input';
-import ClientTextArea from '../../atoms/TextArea';
 import InputDialog from '../InputDialog';
 import { v4 as uuid } from 'uuid';
 
@@ -134,7 +133,7 @@ function ProductDialog(props: any) {
             <Box marginTop="10px" />
             <ClientInput error={imageError} onBlur={handleImageInputBlur} helperText={imageError ? helperText : ""} onChange={handleImageInputChange} label="Ảnh" defaultValue={dataProductModal?.image} InputProps={{ readOnly: openModalTo === Constants.OpenModalTo.VIEW ? true : false }}></ClientInput>
             <Box marginTop="10px" />
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
                 <Grid lg={6} xs={12} item>
                     <ClientInput error={numberError} onBlur={handleNumberInputBlur} helperText={numberError ? helperText : ""} onChange={handleNumberInputChange} label="Số lượng" defaultValue={dataProductModal?.number} InputProps={{ readOnly: openModalTo === Constants.OpenModalTo.VIEW ? true : false }}></ClientInput>
                 </Grid>
@@ -149,7 +148,7 @@ function ProductDialog(props: any) {
                 </Grid>
             </Grid>
             <Box marginTop="10px" />
-            <ClientTextArea error={descriptionError} onBlur={handleDescriptionInputBlur} helperText={descriptionError ? helperText : ""} onChange={handleDescriptionInputChange} label="Mô tả" defaultValue={dataProductModal?.description} InputProps={{ readOnly: openModalTo === Constants.OpenModalTo.VIEW ? true : false }}></ClientTextArea>
+            <ClientInput multiline rows={1} error={descriptionError} onBlur={handleDescriptionInputBlur} helperText={descriptionError ? helperText : ""} onChange={handleDescriptionInputChange} label="Mô tả" defaultValue={dataProductModal?.description} InputProps={{ readOnly: openModalTo === Constants.OpenModalTo.VIEW ? true : false }}></ClientInput>
         </InputDialog>
     );
 }

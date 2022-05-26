@@ -1,7 +1,6 @@
-import { Container } from "@mui/system";
+import { styled } from "@mui/styles";
 import React from "react";
 import ScrollTopButton from "../atoms/ScrollTopButton";
-import Footer from "../organisms/Footer";
 
 interface IPageTemplateProp {
     Header?: any;
@@ -11,16 +10,22 @@ interface IPageTemplateProp {
 }
 
 export default function PageTemplate(props: IPageTemplateProp) {
-    const { Header, Drawer, Body, children } = props;
+    const { Header, Drawer, Body } = props;
+    const BodyPanel = styled('div')(() => ({
+        width: '100%',
+        minHeight: '100vh',
+        paddingBottom: '50px',
+        backgroundColor: '#FAFAFA'
+    }))
     return (
-        <div>
+        <>
             <Header />
             <Drawer />
-            <Body>{children}</Body>
-            <Footer></Footer>
+            <BodyPanel>{Body}</BodyPanel>
+            {/* <Footer></Footer> */}
             <div style={{ position: 'fixed', bottom: 10, right: 10 }}>
                 <ScrollTopButton></ScrollTopButton>
             </div>
-        </div>
+        </>
     );
 }

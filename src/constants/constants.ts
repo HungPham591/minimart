@@ -1,4 +1,3 @@
-
 const Constants = {
     OpenModalTo: {
         VIEW: "VIEW",

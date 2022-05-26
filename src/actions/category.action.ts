@@ -51,7 +51,7 @@ const data = [
 
 export const fetchCategoryAPI = (payload: any) => {
     return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(data), 100);
+        setTimeout(() => resolve(data), 2000);
     })
 }
 export const addCategoryAPI = (payload: any) => {

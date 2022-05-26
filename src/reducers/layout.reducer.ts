@@ -8,6 +8,7 @@ const initialState = {
     categoryModalOpen: false,
     confirmModalOpen: false,
     openModalTo: null,
+    navigating: false,
 }
 
 export const LayoutReducer = createSlice({
@@ -49,6 +50,9 @@ export const LayoutReducer = createSlice({
             state.dataProductModal = null;
             state.dataCategoryModal = null;
         },
+        isNavigating: (state, action) => {
+            state.navigating = !state.navigating;
+        }
     },
     extraReducers: (builder) => {
 
@@ -64,6 +68,7 @@ export const {
     openProductModal,
     closeConfirmModal,
     closeInputModal,
+    isNavigating,
 } = LayoutReducer.actions;
 
 export const selectLayout = (state: any) => state.layout;//reducer name

@@ -11,6 +11,10 @@ const BlueTheme = createTheme({
     shape: {
         borderRadius: '10px'
     },
+    typography: {
+
+    },
+    // spacing: [],
     components: {
         MuiAppBar: {
             styleOverrides: {

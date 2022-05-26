@@ -2,11 +2,13 @@
 import { Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import React from "react";
+import TextSkeleton from "../../atoms/TextSkeleton";
 
 interface ITableProp {
     header: Array<string>;
     value: Array<Array<any>>;
     classes: any;
+    loading: boolean;
 }
 
 const styles = {
@@ -41,33 +43,52 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function TableData(props: ITableProp) {
+    const tableHead = () => {
+        return props?.header.map((value, index) => (
+            <StyledTableCell key={index}><b>{value}</b></StyledTableCell>
+        ));
+    }
+    const tableSkeletonLoading = () => {
+        const arrayElement = Array();
+        for (let i = 1; i <= 5; i++) {
+            arrayElement.push(
+                <TableRow>
+                    {
+                        props?.header.map((value, index) => (
+                            <TableCell key={index}><TextSkeleton /></TableCell>
+                        ))
+                    }
+                </TableRow>
+            )
+        }
+        return arrayElement;
+    }
+    const tableData = () => {
+        return props?.value.map((value, index) => (
+            <StyledTableRow key={index}>
+                {
+                    value.map((value, index) => (
+                        <TableCell key={index}>
+                            <div className={props?.classes?.cell}>
+                                {value}
+                            </div>
+                        </TableCell>
+                    ))
+                }
+            </StyledTableRow>
+        ))
+    }
     return (
         <TableContainer {...props} component={Paper}>
             <Table stickyHeader>
                 <TableHead>
                     <TableRow>
-                        {
-                            props?.header.map((value, index) => (
-                                <StyledTableCell key={index}><b>{value}</b></StyledTableCell>
-                            ))
-                        }
+                        {tableHead()}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {
-                        props?.value.map((value, index) => (
-                            <StyledTableRow>
-                                {
-                                    value.map((value, index) => (
-                                        <TableCell key={index}>
-                                            <div className={props?.classes?.cell}>
-                                                {value}
-                                            </div>
-                                        </TableCell>
-                                    ))
-                                }
-                            </StyledTableRow>
-                        ))
+                        props?.loading ? tableSkeletonLoading() : tableData()
                     }
                 </TableBody>
             </Table>

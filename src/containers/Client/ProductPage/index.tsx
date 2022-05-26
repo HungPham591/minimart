@@ -8,11 +8,11 @@ import { addProductRequest, fetchProductRequest, removeProductRequest, updatePro
 import Constants from '../../../constants/constants';
 import { closeConfirmModal, openConfirmProductModal, openProductModal, selectLayout } from '../../../reducers/layout.reducer';
 import { selectProduct, sortProduct } from '../../../reducers/product.reducer';
-import ConfirmDialog from '../Atomic/molecules/ConfirmDialog';
-import ContentPanel from '../Atomic/molecules/ContentPanel';
-import ProductDialog from '../Atomic/molecules/ProductDialog';
-import SearchPanel from '../Atomic/molecules/SearchPanel';
-import TitlePanel from '../Atomic/molecules/TitlePanel';
+import ContentPanel from '../Atomic/organisms/ContentPanel';
+import ProductDialog from '../Atomic/organisms/ProductDialog';
+import SearchPanel from '../Atomic/organisms/SearchPanel';
+import TitlePanel from '../Atomic/organisms/TitlePanel';
+import ConfirmDialog from '../Atomic/organisms/ConfirmDialog';
 
 const styles = {
     searchPanel: {
@@ -20,7 +20,6 @@ const styles = {
         top: -40
     },
     searchPaper: {
-        // backgroundColor: "#FEBB02",
         paddingTop: "5px",
         paddingBottom: "5px",
         borderStyle: "solid" as "solid",
@@ -43,7 +42,7 @@ const title = [
 
 
 function ProductPage(props: any) {
-    const { data } = useSelector(selectProduct);
+    const { data, loading } = useSelector(selectProduct);
     const { openModalTo, dataProductModal } = useSelector(selectLayout);
     const dispatch = useDispatch();
 
@@ -92,8 +91,7 @@ function ProductPage(props: any) {
                     <SearchPanel handleSortButton={handleSortButton} searchLabel="sản phẩm"></SearchPanel>
                 </Paper>
             </Container>
-            <div style={{ marginTop: '30px' }}></div>
-            <ContentPanel title="SẢN PHẨM" tableTitle={title} tableData={data} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
+            <ContentPanel loading={loading} title="SẢN PHẨM" tableTitle={title} tableData={data} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
         </React.Fragment>
     );
 }

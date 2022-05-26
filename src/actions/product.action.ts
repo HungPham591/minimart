@@ -46,7 +46,7 @@ const data = [
 
 export const fetchProductAPI = (payload: any) => {
     return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(data), 100);
+        setTimeout(() => resolve(data), 2000);
     });
 }
 export const addProductAPI = (payload: any) => {

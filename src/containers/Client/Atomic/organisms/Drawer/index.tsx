@@ -1,16 +1,16 @@
 import { ListAlt, ShoppingCart } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Avatar, Grid, IconButton, ListItemIcon, ListItemText, SwipeableDrawer } from '@mui/material';
+import { Avatar, Grid, IconButton, SwipeableDrawer } from '@mui/material';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import { withStyles } from '@mui/styles';
+import { withStyles, makeStyles } from '@mui/styles';
 import { Container } from '@mui/system';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, matchRoutes, NavLink, useLocation } from 'react-router-dom';
-import { closeDrawer, openDrawer, selectLayout } from '../../../../../reducers/layout.reducer';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { closeDrawer, isNavigating, openDrawer, selectLayout } from '../../../../../reducers/layout.reducer';
 import { selectProfile } from '../../../../../reducers/profile.reducer';
 import background from '../../../images/background.jpg';
 
@@ -28,11 +28,28 @@ const styles = {
         paddingTop: "10px",
         paddingBottom: "10px"
     },
+    userName: {
+        margin: "5px 0"
+    },
     link: {
+        height: "60px",
         color: "grey"
     },
     activeLink: {
+        height: "60px",
+        backgroundColor: '#E6E6E6',
         color: "red"
+    },
+    linkItem: {
+        textDecoration: 'none',
+    },
+    listItemText: {
+        fontSize: "17px",
+        fontWeight: "500",
+        padding: "0 20px"
+    },
+    listItemButton: {
+        height: "60px",
     }
 }
 const listItem = [
@@ -52,6 +69,7 @@ const listItem = [
 
 
 function Drawer(props: any) {
+    const navigate = useNavigate();
     const { pathname } = useLocation();
     const dispatch = useDispatch();
     const { data } = useSelector(selectProfile);
@@ -69,6 +87,13 @@ function Drawer(props: any) {
     const checkRoute = (path: string) => {
         if (pathname === path) return true;
         return false;
+    }
+    const handleNavigateButtonClick = (path: string) => {
+        dispatch(isNavigating(true));
+        setTimeout(() => {
+            navigate(path);
+            dispatch(isNavigating(false));
+        }, 2000);
     }
     const list = (anchor: Anchor) => {
         return (
@@ -89,7 +114,7 @@ function Drawer(props: any) {
                                 </div>
                                 <div>
                                     <Avatar alt='avatar' src={data?.image} />
-                                    <h3>{data?.name}</h3>
+                                    <h3 className={props?.classes?.userName}>{data?.name}</h3>
                                 </div>
                             </Grid>
                         </Grid>
@@ -98,16 +123,14 @@ function Drawer(props: any) {
                 <List>
                     {
                         listItem.map((value, index) => (
-                            <Link key={index} style={{ textDecoration: 'none' }} to={value?.url}>
-                                <ListItem key={index} disablePadding>
-                                    <ListItemButton>
-                                        <ListItemIcon>
-                                            {value.icon}
-                                        </ListItemIcon>
-                                        <ListItemText primary={value.title} />
-                                    </ListItemButton>
-                                </ListItem>
-                            </Link>
+                            <ListItem onClick={() => handleNavigateButtonClick(value?.url)} className={checkRoute(value?.url) ? props?.classes?.activeLink : props?.classes?.link} key={index} disablePadding>
+                                <ListItemButton className={props?.classes?.listItemButton}>
+                                    {value.icon}
+                                    <p className={props?.classes?.listItemText}>
+                                        {value.title}
+                                    </p>
+                                </ListItemButton>
+                            </ListItem>
                         )
                         )
                     }

@@ -1,13 +1,10 @@
 import { Delete, Edit, Visibility } from '@mui/icons-material';
-import { Container, IconButton, Paper, styled } from "@mui/material";
+import { Button, Container, IconButton, Pagination, Paper, styled } from "@mui/material";
 import { withStyles } from "@mui/styles";
-import * as _ from "lodash";
 import React, { useState } from "react";
 import Constants from '../../../../../constants/constants';
-import Button from "../../atoms/Button";
 import ClientImage from '../../atoms/Image';
-import Pagination from "../../atoms/Pagination";
-import TableData from "../../atoms/Table";
+import TableData from "../../molecules/Table";
 
 const styles = {
     root: {
@@ -32,11 +29,11 @@ function ContentPanel(props: any) {
     const convertDataIntoTable = (data: Array<any>) => {
         return data.map((value, index) => {
             if (index + 1 < (page - 1) * Constants.SIZE_PER_PAGE + 1 || index + 1 > page * Constants.SIZE_PER_PAGE) return [];
-            const keyArray = _.keys(value);
+            const keyArray = Object.keys(value);
             const imageIndex = keyArray.findIndex((element) => {
                 return element === "image";
             })
-            const valueArray: Array<any> = _.values(value);
+            const valueArray: Array<any> = Object.values(value);
             valueArray[imageIndex] = <ClientImage src={value.image} />;
             valueArray.shift();
             valueArray.unshift(index + 1);
@@ -75,12 +72,12 @@ function ContentPanel(props: any) {
             <Paper elevation={4}>
                 <Container style={styles.root}>
                     <TitleRow style={styles.searchPanel}>
-                        <h3>{props?.title}: {props?.tableData?.length}</h3>
+                        <h3>{props?.title}: {props?.loading ? "" : props?.tableData?.length}</h3>
                         <div style={{ display: "flex", alignItems: "center" }}>
-                            <Button title="Thêm" variant="contained" onClick={props?.handleOpenCreateButton}></Button>
+                            <Button variant="contained" onClick={props?.handleOpenCreateButton}>Thêm</Button>
                         </div>
                     </TitleRow>
-                    <TableData header={props?.tableTitle} value={convertDataIntoTable(props?.tableData)} />
+                    <TableData loading={props?.loading} header={props?.tableTitle} value={convertDataIntoTable(props?.tableData)} />
                     <PaginationPanel>
                         <Pagination count={getNumberOfPage()} page={page} onChange={handlePagination} />
                     </PaginationPanel>

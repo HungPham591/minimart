@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@mui/icons-material';
-import { Autocomplete, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import React from 'react';
 
 
@@ -10,7 +10,7 @@ export default function ClientSearchInput(props: any) {
             InputProps={{
                 endAdornment: <SearchOutlined />
             }}
-            style={{ width: '100%' }}
+            fullWidth
             variant="outlined"
         />
     )

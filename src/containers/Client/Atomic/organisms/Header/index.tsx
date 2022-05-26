@@ -1,9 +1,9 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { AppBar, Avatar, Grid, IconButton, Switch, Toolbar, Typography, useTheme } from "@mui/material";
+import { AppBar, Avatar, Grid, IconButton, LinearProgress, Switch, Toolbar, Typography } from "@mui/material";
 import { withStyles } from '@mui/styles';
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { openDrawer } from '../../../../../reducers/layout.reducer';
+import { openDrawer, selectLayout } from '../../../../../reducers/layout.reducer';
 import { selectProfile } from '../../../../../reducers/profile.reducer';
 import { changeTheme } from '../../../../../reducers/setting.reducer';
 
@@ -23,6 +23,7 @@ const styles = {
 function Header(props: any) {
     const { data } = useSelector(selectProfile);
     const dispatch = useDispatch();
+    const { navigating } = useSelector(selectLayout);
 
     const [show, setShow] = useState(false);
     const [switchChecked, setSwitchChecked] = useState(false);
@@ -46,13 +47,14 @@ function Header(props: any) {
     }
     return (
         <AppBar style={show ? styles.show : styles.hide} position="fixed">
+            <LinearProgress style={navigating ? { display: 'block' } : { display: 'none' }} />
             <Toolbar>
                 <Grid spacing={3} container>
                     <Grid lg={2} display="flex" alignItems='center' justifyContent="space-between" item>
                         <IconButton onClick={onMenuButtonCLick} size="medium" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+                        <Typography fontWeight="bold" variant="h6" component="div">
                             SHOPPING.COM
                         </Typography>
                     </Grid>
@@ -63,7 +65,6 @@ function Header(props: any) {
                         <Avatar alt='avatar' src={data?.image}></Avatar>
                     </Grid>
                 </Grid>
-
             </Toolbar>
         </AppBar>
     )

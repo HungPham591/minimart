@@ -8,11 +8,11 @@ import { addCategoryRequest, fetchCategoryRequest, removeCategoryRequest, update
 import Constants from '../../../constants/constants';
 import { selectCategory, sortCategory } from '../../../reducers/category.reducer';
 import { closeConfirmModal, openCategoryModal, openConfirmCategoryModal, selectLayout } from '../../../reducers/layout.reducer';
-import CategoryDialog from '../Atomic/molecules/CategoryDialog';
-import ConfirmDialog from '../Atomic/molecules/ConfirmDialog';
-import ContentPanel from '../Atomic/molecules/ContentPanel';
-import SearchPanel from '../Atomic/molecules/SearchPanel';
-import TitlePanel from '../Atomic/molecules/TitlePanel';
+import CategoryDialog from '../Atomic/organisms/CategoryDialog';
+import ConfirmDialog from '../Atomic/organisms/ConfirmDialog';
+import ContentPanel from '../Atomic/organisms/ContentPanel';
+import SearchPanel from '../Atomic/organisms/SearchPanel';
+import TitlePanel from '../Atomic/organisms/TitlePanel';
 
 const styles = {
     searchPanel: {
@@ -38,7 +38,7 @@ const title = [
 
 
 function CategoryPage(props: any) {
-    const { data } = useSelector(selectCategory);
+    const { data, loading } = useSelector(selectCategory);
     const { openModalTo, dataCategoryModal } = useSelector(selectLayout);
     const dispatch = useDispatch();
 
@@ -87,8 +87,7 @@ function CategoryPage(props: any) {
                     <SearchPanel handleSortButton={handleSortButton} searchLabel="danh mục sản phẩm"></SearchPanel>
                 </Paper>
             </Container>
-            <div style={{ marginTop: '30px' }}></div>
-            <ContentPanel title="DANH MỤC SẢN PHẨM" tableTitle={title} tableData={data} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
+            <ContentPanel loading={loading} title="DANH MỤC SẢN PHẨM" tableTitle={title} tableData={data} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
         </React.Fragment>
     );
 }

@@ -29,7 +29,7 @@ const styles = {
         flexGrow: 1,
     },
     button: {
-        height: "100%"
+        height: "100%",
     }
 };
 
@@ -56,7 +56,7 @@ function SearchPanel(props: any) {
                     <ClientFilterDropdown data={filter} onChange={handleFilterChange}></ClientFilterDropdown>
                 </Grid>
                 <Grid item lg={2} md={12} xs={12}>
-                    <Button variant="contained" fullWidth={true} onClick={handleSortButton} className={props?.classes?.button}>TÌM KIẾM</Button>
+                    <Button title='' variant="contained" fullWidth={true} onClick={handleSortButton} className={props?.classes?.button}>TÌM KIẾM</Button>
                 </Grid>
             </Grid>
         </Container>

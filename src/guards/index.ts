@@ -1,6 +1,6 @@
-import PrivateRoute from "./private.guard";
-import PublicRoute from "./public.guard";
-import AuthRoute from "./auth.guards";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
+import AuthRoute from "./AuthRoute";
 
 export {
     PrivateRoute,

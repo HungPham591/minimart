@@ -1,8 +1,8 @@
-import { LayoutReducer } from './layout.reducer';
-import { SettingReducer } from './setting.reducer';
-import { ProfileReducer } from './profile.reducer';
-import { ProductReducer } from './product.reducer';
-import { CategoryReducer } from './category.reducer';
+import { LayoutReducer } from './LayoutReducer';
+import { SettingReducer } from './SettingReducer';
+import { ProfileReducer } from './ProfileReducer';
+import { ProductReducer } from './ProductReducer';
+import { CategoryReducer } from './CategoryReducer';
 import { combineReducers } from "redux";
 
 const reducer = combineReducers({

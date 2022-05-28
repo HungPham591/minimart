@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
-import { categorySaga } from './category.saga';
-import { productSaga } from './product.saga';
+import { categorySaga } from './CategorySaga';
+import { productSaga } from './ProductSaga';
 
 
 export default function* rootSaga() {

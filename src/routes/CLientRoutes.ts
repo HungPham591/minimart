@@ -1,5 +1,6 @@
-import CategoryPage from "../containers/Client/CategoryPage";
-import ProductPage from "../containers/Client/ProductPage";
+import CategoryPage from "../containers/CategoryPage";
+import ProductPage from "../containers/ProductPage";
+
 
 const ClientRoutes = {
     CATEGORY: {

@@ -6,7 +6,7 @@ import Page from './containers';
 import './Atomic/_settings/base.css'
 import reportWebVitals from './reportWebVitals';
 import { persistor, store } from './store';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,9 +20,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <BrowserRouter basename='https://hungpham591.github.io/minimart/'>
+        <HashRouter>
           <Page />
-        </BrowserRouter>
+        </HashRouter>
       </PersistGate>
     </Provider>
   </React.StrictMode>

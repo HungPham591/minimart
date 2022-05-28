@@ -1,7 +1,6 @@
 
 import { Delete, Edit, Visibility } from '@mui/icons-material';
-import { Box, IconButton, Paper } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box, IconButton } from '@mui/material';
 import { Container } from '@mui/system';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

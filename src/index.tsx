@@ -20,7 +20,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <BrowserRouter>
+        <BrowserRouter basename='https://hungpham591.github.io/minimart/'>
           <Page />
         </BrowserRouter>
       </PersistGate>

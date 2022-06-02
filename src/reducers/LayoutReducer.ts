@@ -6,11 +6,12 @@ const initialState = {
     dataCategoryModal: null,
     productModalOpen: false,
     categoryModalOpen: false,
-    confirmModalOpen: false,
+    deleteModalOpen: false,
     deleteProductModalOpen: false,
     deleteCategoryModalOpen: false,
     openModalTo: null,
     navigating: false,
+    confirmModalOpen: false,
 }
 
 export const LayoutReducer = createSlice({
@@ -41,24 +42,27 @@ export const LayoutReducer = createSlice({
         },
         openDeleteProductModal: (state, action) => {
             state.dataProductModal = action.payload.data;
-            state.confirmModalOpen = true;
+            state.deleteModalOpen = true;
         },
         openDeleteCategoryModal: (state, action) => {
             state.dataCategoryModal = action.payload.data;
-            state.confirmModalOpen = true;
+            state.deleteModalOpen = true;
         },
         closeDeleteProductModal: (state, action) => {
-            state.confirmModalOpen = false;
+            state.deleteModalOpen = false;
             state.dataProductModal = null;
             state.dataCategoryModal = null;
         },
         closeDeleteCategoryModal: (state, action) => {
-            state.confirmModalOpen = false;
+            state.deleteModalOpen = false;
             state.dataProductModal = null;
             state.dataCategoryModal = null;
         },
         isNavigating: (state, action) => {
             state.navigating = !state.navigating;
+        },
+        openConfirmModal: (state, action) => {
+            state.confirmModalOpen = !state.confirmModalOpen;
         }
     },
     extraReducers: (builder) => {
@@ -77,6 +81,7 @@ export const {
     closeDeleteCategoryModal,
     closeInputModal,
     isNavigating,
+    openConfirmModal
 } = LayoutReducer.actions;
 
 export const selectLayout = (state: any) => state.layout;//reducer name

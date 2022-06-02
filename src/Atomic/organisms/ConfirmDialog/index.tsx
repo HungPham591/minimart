@@ -2,42 +2,31 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import * as React from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeCategoryRequest } from '../../../actions/CategoryAction';
-import { closeDeleteCategoryModal, selectLayout } from '../../../reducers/LayoutReducer';
+import { openConfirmModal, selectLayout } from '../../../reducers/LayoutReducer';
 
-
-
-export interface DialogTitleProps {
-    id: string;
-    children?: React.ReactNode;
-    onClose: () => void;
-}
-
-
-function DeleteCategoryModal(props: any) {
-    const { deleteModalOpen, dataCategoryModal } = useSelector(selectLayout);
+function ConfirmDialog(props: any) {
+    const { confirmModalOpen } = useSelector(selectLayout);
     const dispatch = useDispatch();
 
     const handleConfirmButton = () => {
-        const data = { ...dataCategoryModal };
-        dispatch(removeCategoryRequest(data));
-        dispatch(closeDeleteCategoryModal(true));
+        props?.confirm();
+        dispatch(openConfirmModal(null));
     };
     const handleCloseButton = () => {
-        dispatch(closeDeleteCategoryModal(true));
+        dispatch(openConfirmModal(null));
     }
 
     return (
         <Dialog
-            open={deleteModalOpen}
+            open={confirmModalOpen}
             onClose={handleConfirmButton}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
             <DialogTitle id="alert-dialog-title">
-                Bạn có thật sự muốn xóa danh sách sản phẩm này?
+                {props?.title}
             </DialogTitle>
             <DialogActions>
                 <Button onClick={handleCloseButton}>ĐÓNG</Button>
@@ -46,7 +35,7 @@ function DeleteCategoryModal(props: any) {
                 </Button>
             </DialogActions>
         </Dialog>
-    );
+    )
 }
 
-export default React.memo(DeleteCategoryModal);
+export default React.memo(ConfirmDialog);

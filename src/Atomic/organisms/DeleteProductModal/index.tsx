@@ -17,7 +17,7 @@ export interface DialogTitleProps {
 
 
 function DeleteProductModal(props: any) {
-    const { confirmModalOpen, dataProductModal } = useSelector(selectLayout);
+    const { deleteModalOpen, dataProductModal } = useSelector(selectLayout);
     const dispatch = useDispatch();
 
     const handleConfirmButton = () => {
@@ -31,7 +31,7 @@ function DeleteProductModal(props: any) {
 
     return (
         <Dialog
-            open={confirmModalOpen}
+            open={deleteModalOpen}
             onClose={handleConfirmButton}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"

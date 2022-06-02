@@ -1,3 +1,5 @@
+import { Shadows } from "@mui/material/styles/shadows";
+
 const BaseTheme = {
     palette: {
         primary: {
@@ -6,12 +8,19 @@ const BaseTheme = {
         secondary: {
             main: "#FEBB02"
         },
+        background: {
+            default: "#FAFAFA"
+        },
+        text: {
+            primary: "#11142d",
+        }
     },
+    shadows: Array(25).fill('rgb(90 114 123 / 11%) 0px 7px 30px 0px') as Shadows,
     shape: {
-        borderRadius: 10,
+        borderRadius: 15,
     },
-    spacing: [0, 4, 8, 16, 32, 64],
     typography: {
+        fontFamily: "'Montserrat', sans-serif",
         button: {
             fontWeight: "bold"
         },
@@ -29,11 +38,30 @@ const BaseTheme = {
         MuiAppBar: {
             styleOverrides: {
                 root: ({ theme }: any) => ({
-                    backgroundColor: "#fff",
-                    color: theme?.palette.grey[800],
-                    boxShadow: '0 4px 8px 0 rgba(172, 172, 172, 0.2)',
+                    backgroundColor: "inherit",
+                    color: "#000000",
+                    boxShadow: "none",
+                    position: "static" as "static"
                 })
             },
+        },
+        MuiBottomNavigation: {
+            styleOverrides: {
+                root: {
+                    position: 'fixed' as 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    zIndex: 1100
+                }
+            }
+        },
+        MuiDrawer: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: "blue"
+                }
+            }
         },
     }
 }

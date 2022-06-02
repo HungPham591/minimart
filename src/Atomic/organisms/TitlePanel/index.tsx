@@ -1,25 +1,26 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 import React from "react";
-import Typewritter from 'typewriter-effect';
-
-
+import "./style.scss";
 
 function TitlePanel(props: any) {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     return (
-        <Box display="flex" alignItems="center" justifyContent="space-between" paddingY="140px" bgcolor="#003580">
-            <Container>
-                <Typography variant="h3" component="h2" fontWeight="bold" color={'white'}>
-                    Danh sách
-                    <span>
-                        <Typewritter onInit={(typewritter) => {
-                            typewritter.typeString(`danh mục các ${props?.title}`).pauseFor(2000).deleteAll().typeString(`danh mục các ${props?.title}`).start();
-                        }} />
-                    </span>
-                </Typography>
-                {/* <p className={classes.text}>Đăng nhập vào tài khoản admin để có thể chỉnh sửa dữ liệu</p>
-                <Button size="large" sx={{ paddingY: "15px" }} variant="contained">ĐĂNG NHẬP / ĐĂNG KÝ</Button> */}
-            </Container>
-        </Box>
+        <div id="titlepanel">
+            <Box color="white" paddingY="30px" bgcolor="#003580">
+                <Container>
+                    <Box display="flex" justifyContent="space-between">
+                        <Typography maxWidth={isMobile ? "70%" : "50%"} variant="h5" component="h2" fontWeight="bold">
+                            Danh sách {props?.title}
+                        </Typography>
+                        <Box display="flex" alignItems="center">
+                            <Button id="addbutton" variant="contained" startIcon={<AddIcon id="addicon" />}>Thêm</Button>
+                        </Box>
+                    </Box>
+                </Container>
+            </Box>
+        </div>
     )
 }
 

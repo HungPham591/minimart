@@ -1,6 +1,6 @@
 
 import { Delete, Edit, Visibility } from '@mui/icons-material';
-import { Box, Chip, IconButton } from '@mui/material';
+import { Box, Chip, Grid, IconButton } from '@mui/material';
 import { Container } from '@mui/system';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import CustomImage from '../../Atomic/atoms/Image';
 import ContentPanel from '../../Atomic/organisms/ContentPanel';
 import DeleteProductModal from '../../Atomic/organisms/DeleteProductModal';
 import ProductDialog from '../../Atomic/organisms/ProductDialog';
-import SearchPanel from '../../Atomic/organisms/SearchPanel';
+import SearchPanel from '../../Atomic/organisms/ProductSearchPanel';
 import TitlePanel from '../../Atomic/organisms/TitlePanel';
 import Constants from '../../constants/Constants';
 import { selectCategory } from '../../reducers/CategoryReducer';
@@ -30,7 +30,29 @@ const title = [
     'Trạng thái',
     'Thao tác',
 ];
+const tableHeadAlign = [
+    "left",
+    "left",
+    "left",
+    "center",
+    "left",
+    "left",
+    "left",
+    "center",
+    "center"
+]
 
+const tableCellMinWidth = [
+    "0px",
+    "100px",
+    "100px",
+    "200px",
+    "200px",
+    "0px",
+    "0px",
+    "0px",
+    "200px",
+]
 
 function ProductPage(props: any) {
     const { data: dataProduct, loading } = useSelector(selectProduct);
@@ -70,19 +92,19 @@ function ProductPage(props: any) {
             const tempValue = { ...value };
             tempValue.category = dataCategory.find((element: any) => element.id === tempValue.category)?.name;
             tempValue.image = <CustomImage src={tempValue?.image} />
-            tempValue.status = tempValue?.status ? <Chip label="Còn hàng" color='primary' variant="outlined" /> : <Chip label="Hết hàng" color="error" variant="outlined" />;
+            tempValue.status = tempValue?.status ? <Chip label="Còn hàng" style={{ borderColor: "#1a73e8", color: "#1a73e8" }} variant="outlined" /> : <Chip label="Hết hàng" style={{ borderColor: "#FF385C", color: "#FF385C" }} variant="outlined" />;
             const valueArray: Array<any> = Object.values(tempValue);
             valueArray.shift();
             valueArray.unshift(index + 1);
             valueArray.push(
-                <Box display="flex">
-                    <IconButton onClick={() => handleOpenInfoButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                <Box display="flex" justifyContent="space-between" minWidth="180px">
+                    <IconButton onClick={() => handleOpenInfoButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" >
                         <Visibility />
                     </IconButton>
-                    <IconButton onClick={() => handleOpenUpdateButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                    <IconButton onClick={() => handleOpenUpdateButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" >
                         <Edit />
                     </IconButton>
-                    <IconButton onClick={() => handleOpenDeleteButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                    <IconButton onClick={() => handleOpenDeleteButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
                         <Delete />
                     </IconButton>
                 </Box>
@@ -96,14 +118,12 @@ function ProductPage(props: any) {
             <ProductDialog handleConfirmButton={handleConfirmButton} />
             <DeleteProductModal />
             <TitlePanel title="sản phẩm" />
-            <Box position="relative" top={-40}>
-                <Container>
-                    <Box paddingY="5px" border={5} borderColor='secondary.main' borderRadius={1} bgcolor="white">
-                        <SearchPanel handleSortButton={handleSortButton} searchLabel="sản phẩm" />
-                    </Box>
-                </Container>
-            </Box>
-            <ContentPanel loading={loading} title="SẢN PHẨM" tableTitle={title} tableData={convertDataIntoTable()} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
+            <Container style={{ paddingTop: "20px", paddingBottom: "20px" }}>
+                <SearchPanel handleSortButton={handleSortButton} searchLabel="sản phẩm" />
+            </Container>
+            <Grid container>
+                <ContentPanel tableHeadAlign={tableHeadAlign} tableCellMinWidth={tableCellMinWidth} loading={loading} title="SẢN PHẨM" tableTitle={title} tableData={convertDataIntoTable()} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
+            </Grid>
         </React.Fragment>
     );
 }

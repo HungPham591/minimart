@@ -1,9 +1,11 @@
-import { Box, Button, Container, Pagination, Paper } from "@mui/material";
+import { Box, Container, Pagination, Paper, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import Constants from "../../../constants/Constants";
 import CustomTable from "../../molecules/Table";
 
 function ContentPanel(props: any) {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     const [page, setPage] = useState(1);
 
     const handlePagination = (e: any, page: number) => {
@@ -25,14 +27,12 @@ function ContentPanel(props: any) {
         <Container>
             <Paper elevation={4}>
                 <Box padding="15px 30px">
-                    <Box paddingBottom="10px" display="flex" justifyContent='space-between' >
-                        <h3>{props?.title}: {props?.loading ? "" : props?.tableData?.length}</h3>
-                        <Box display="flex" alignItems="center">
-                            <Button variant="contained" onClick={props?.handleOpenCreateButton}>Thêm</Button>
-                        </Box>
+                    <Box paddingBottom="20px" paddingTop="10px" display="flex" justifyContent='space-between' >
+                        <Typography variant="h6" fontWeight={"bold"}>{props?.title}</Typography>
+                        <Typography fontSize="18px" fontWeight="600">số lượng: {props?.loading ? "" : props?.tableData?.length}</Typography>
                     </Box>
-                    <CustomTable loading={props?.loading ? 1 : 0} header={props?.tableTitle} value={convertDataIntoTable(props?.tableData)} />
-                    <Box paddingTop="20px" display="flex" justifyContent="right">
+                    <CustomTable tableHeadAlign={props?.tableHeadAlign} tableCellMinWidth={props?.tableCellMinWidth} loading={props?.loading ? 1 : 0} header={props?.tableTitle} value={convertDataIntoTable(props?.tableData)} />
+                    <Box paddingTop="20px" display="flex" justifyContent={isMobile ? "space-around" : "right"}>
                         <Pagination count={getNumberOfPage()} page={page} onChange={handlePagination} />
                     </Box>
                 </Box>

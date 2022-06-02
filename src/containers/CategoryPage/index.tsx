@@ -8,7 +8,7 @@ import { addCategoryRequest, fetchCategoryRequest, updateCategoryRequest } from 
 import CategoryDialog from '../../Atomic/organisms/CategoryDialog';
 import ContentPanel from '../../Atomic/organisms/ContentPanel';
 import DeleteCategoryModal from '../../Atomic/organisms/DeleteCategoryModal';
-import SearchPanel from '../../Atomic/organisms/SearchPanel';
+import SearchPanel from '../../Atomic/organisms/ProductSearchPanel';
 import TitlePanel from '../../Atomic/organisms/TitlePanel';
 import Constants from '../../constants/Constants';
 import { selectCategory, sortCategory } from '../../reducers/CategoryReducer';
@@ -21,7 +21,19 @@ const title = [
     'Miêu tả',
     'Thao tác',
 ];
+const tableHeadAlign = [
+    "left",
+    "left",
+    "left",
+    "center",
+]
 
+const tableCellMinWidth = [
+    "0px",
+    "100px",
+    "100px",
+    "200px",
+]
 
 function CategoryPage(props: any) {
     const { data, loading } = useSelector(selectCategory);
@@ -59,14 +71,14 @@ function CategoryPage(props: any) {
             valueArray.shift();
             valueArray.unshift(index + 1);
             valueArray.push(
-                <Box display="flex">
-                    <IconButton onClick={() => handleOpenInfoButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                <Box display="flex" justifyContent="space-between" minWidth="180px">
+                    <IconButton onClick={() => handleOpenInfoButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
                         <Visibility />
                     </IconButton>
-                    <IconButton onClick={() => handleOpenUpdateButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                    <IconButton onClick={() => handleOpenUpdateButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
                         <Edit />
                     </IconButton>
-                    <IconButton onClick={() => handleOpenDeleteButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                    <IconButton onClick={() => handleOpenDeleteButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
                         <Delete />
                     </IconButton>
                 </Box>
@@ -79,15 +91,11 @@ function CategoryPage(props: any) {
         <React.Fragment>
             <CategoryDialog handleConfirmButton={handleConfirmButton}></CategoryDialog>
             <DeleteCategoryModal />
-            <TitlePanel title="danh mục sản phẩm"></TitlePanel>
-            <Box position="relative" top={-40}>
-                <Container>
-                    <Box paddingY="5px" border={5} borderColor='secondary.main' borderRadius={1} bgcolor="white">
-                        <SearchPanel handleSortButton={handleSortButton} searchLabel="danh mục sản phẩm" />
-                    </Box>
-                </Container>
-            </Box>
-            <ContentPanel loading={loading} title="DANH MỤC SẢN PHẨM" tableTitle={title} tableData={convertDataIntoTable()} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
+            <TitlePanel title="danh mục sản phẩm" />
+            <Container style={{ paddingTop: "20px", paddingBottom: "20px" }}>
+                <SearchPanel handleSortButton={handleSortButton} searchLabel="danh mục sản phẩm" />
+            </Container>
+            <ContentPanel tableHeadAlign={tableHeadAlign} tableCellMinWidth={tableCellMinWidth} loading={loading} title="DANH MỤC SẢN PHẨM" tableTitle={title} tableData={convertDataIntoTable()} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
         </React.Fragment>
     );
 }

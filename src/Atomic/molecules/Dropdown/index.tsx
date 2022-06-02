@@ -18,7 +18,7 @@ import FormikSelect from '../../atoms/FormikSelect';
 function CustomDropdown(props: any) {
   return (
     <FormControl fullWidth>
-      <InputLabel >{props?.title}</InputLabel>
+      <InputLabel style={{ backgroundColor: "white" }}>{props?.title}</InputLabel>
       <Select
         {...props}
         onChange={props?.onChange}

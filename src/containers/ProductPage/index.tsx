@@ -5,16 +5,17 @@ import { Container } from '@mui/system';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategoryRequest } from '../../actions/CategoryAction';
-import { addProductRequest, fetchProductRequest, updateProductRequest } from '../../actions/ProductAction';
+import { fetchProductRequest } from '../../actions/ProductAction';
 import CustomImage from '../../Atomic/atoms/Image';
+import ConfirmDialog from '../../Atomic/organisms/ConfirmDialog';
 import ContentPanel from '../../Atomic/organisms/ContentPanel';
-import DeleteProductModal from '../../Atomic/organisms/DeleteProductModal';
 import ProductDialog from '../../Atomic/organisms/ProductDialog';
 import SearchPanel from '../../Atomic/organisms/ProductSearchPanel';
+import ProductViewDialog from '../../Atomic/organisms/ProductViewDialog';
 import TitlePanel from '../../Atomic/organisms/TitlePanel';
 import Constants from '../../constants/Constants';
 import { selectCategory } from '../../reducers/CategoryReducer';
-import { openDeleteProductModal, openProductModal } from '../../reducers/LayoutReducer';
+import { openConfirmModal, openModal, setDataConfirm, setDataModal } from '../../reducers/LayoutReducer';
 import { selectProduct, sortProduct } from '../../reducers/ProductReducer';
 
 
@@ -67,25 +68,22 @@ function ProductPage(props: any) {
     const handleSortButton = useCallback((data: any) => {
         dispatch(sortProduct(data));
     }, []);
-    const handleOpenCreateButton = useCallback(() => {
-        dispatch(openProductModal({ data: null, openModalTo: Constants.OpenModalTo.CREATE }));
-    }, []);
-    const handleOpenInfoButton = useCallback((data: any) => {
-        dispatch(openProductModal({ data, openModalTo: Constants.OpenModalTo.VIEW }));
-    }, []);
-    const handleOpenUpdateButton = useCallback((data: any) => {
-        dispatch(openProductModal({ data, openModalTo: Constants.OpenModalTo.UPDATE }));
-    }, []);
-    const handleOpenDeleteButton = useCallback((data: any) => {
-        dispatch(openDeleteProductModal({ data }));
-    }, []);
-
-    const handleConfirmButton = useCallback((data: any, openModalTo: string) => {
-        switch (openModalTo) {
-            case Constants.OpenModalTo.CREATE: dispatch(addProductRequest(data)); break;
-            case Constants.OpenModalTo.UPDATE: dispatch(updateProductRequest(data)); break;
-        }
-    }, []);
+    const handleCreateButton = useCallback(() => {
+        dispatch(setDataModal({ data: null }));
+        dispatch(openModal({ modalOpen: Constants.modalOpen.PRODUCT, openModalTo: Constants.OpenModalTo.CREATE }));
+    }, [])
+    const handleViewButton = useCallback((data: any) => {
+        dispatch(setDataModal({ data }));
+        dispatch(openModal({ modalOpen: Constants.modalOpen.PRODUCT, openModalTo: Constants.OpenModalTo.VIEW }));
+    }, [])
+    const handleUpdateButton = useCallback((data: any) => {
+        dispatch(setDataModal({ data }));
+        dispatch(openModal({ modalOpen: Constants.modalOpen.PRODUCT, openModalTo: Constants.OpenModalTo.UPDATE }));
+    }, [])
+    const handleDeleteButton = useCallback((data: any) => {
+        dispatch(setDataConfirm(data));
+        dispatch(openConfirmModal(Constants.needToConfirm.DELETE_PRODUCT));
+    }, [])
 
     const convertDataIntoTable = () => {
         return dataProduct?.map((value: any, index: any) => {
@@ -97,14 +95,14 @@ function ProductPage(props: any) {
             valueArray.shift();
             valueArray.unshift(index + 1);
             valueArray.push(
-                <Box display="flex" justifyContent="space-between" minWidth="180px">
-                    <IconButton onClick={() => handleOpenInfoButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" >
+                <Box display="flex" justifyContent="space-between">
+                    <IconButton onClick={() => handleViewButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" >
                         <Visibility />
                     </IconButton>
-                    <IconButton onClick={() => handleOpenUpdateButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" >
+                    <IconButton onClick={() => handleUpdateButton(value)} size="medium" edge="start" color="inherit" aria-label="menu" >
                         <Edit />
                     </IconButton>
-                    <IconButton onClick={() => handleOpenDeleteButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
+                    <IconButton onClick={() => handleDeleteButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
                         <Delete />
                     </IconButton>
                 </Box>
@@ -115,14 +113,22 @@ function ProductPage(props: any) {
 
     return (
         <React.Fragment>
-            <ProductDialog handleConfirmButton={handleConfirmButton} />
-            <DeleteProductModal />
-            <TitlePanel title="sản phẩm" />
+            <ProductViewDialog />
+            <ProductDialog />
+            <ConfirmDialog />
+            <TitlePanel title="sản phẩm" handleCreateButton={handleCreateButton} />
             <Container style={{ paddingTop: "20px", paddingBottom: "20px" }}>
                 <SearchPanel handleSortButton={handleSortButton} searchLabel="sản phẩm" />
             </Container>
             <Grid container>
-                <ContentPanel tableHeadAlign={tableHeadAlign} tableCellMinWidth={tableCellMinWidth} loading={loading} title="SẢN PHẨM" tableTitle={title} tableData={convertDataIntoTable()} handleOpenCreateButton={handleOpenCreateButton} handleOpenInfoButton={handleOpenInfoButton} handleOpenUpdateButton={handleOpenUpdateButton} handleOpenDeleteButton={handleOpenDeleteButton}></ContentPanel>
+                <ContentPanel
+                    tableHeadAlign={tableHeadAlign}
+                    tableCellMinWidth={tableCellMinWidth}
+                    loading={loading}
+                    title="SẢN PHẨM"
+                    tableTitle={title}
+                    tableData={convertDataIntoTable()}
+                />
             </Grid>
         </React.Fragment>
     );

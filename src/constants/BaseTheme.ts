@@ -45,6 +45,13 @@ const BaseTheme = {
                 })
             },
         },
+        MuiPaper: {
+            styleOverrides: {
+                root: ({ theme }: any) => ({
+                    backgroundColor: theme.shadows[4],
+                })
+            },
+        },
         MuiBottomNavigation: {
             styleOverrides: {
                 root: {

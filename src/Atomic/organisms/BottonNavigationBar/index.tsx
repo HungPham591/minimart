@@ -27,7 +27,7 @@ function BottomNavigationBar(props: any) {
     }
 
     return (
-        <Paper elevation={Constants.Styles.ELEVATION}>
+        <Paper>
             <BottomNavigation value={pathname} onChange={handleChange}>
                 {
                     routes.map((value, index) => (

@@ -1,7 +1,5 @@
 
 
-const AllProjectRoutes = {
-
-}
+const AllProjectRoutes: any[] = []
 
 export default AllProjectRoutes;

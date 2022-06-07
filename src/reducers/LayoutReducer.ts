@@ -2,16 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     drawerOpen: false,
-    dataProductModal: null,
-    dataCategoryModal: null,
-    productModalOpen: false,
-    categoryModalOpen: false,
-    deleteModalOpen: false,
-    deleteProductModalOpen: false,
-    deleteCategoryModalOpen: false,
+    dataConfirm: null,
+    dataModal: null,
+    modalOpen: null,
     openModalTo: null,
     navigating: false,
-    confirmModalOpen: false,
+    confirmModalOpen: null,
 }
 
 export const LayoutReducer = createSlice({
@@ -19,50 +15,23 @@ export const LayoutReducer = createSlice({
     initialState,
     reducers: {
         openDrawer: (state, action) => {
-            state.drawerOpen = true;
+            state.drawerOpen = action.payload;
         },
-        closeDrawer: (state, action) => {
-            state.drawerOpen = false;
+        setDataModal: (state, action) => {
+            state.dataModal = action.payload?.data;
         },
-        openProductModal: (state, action) => {
-            state.dataProductModal = action.payload.data;
-            state.openModalTo = action.payload.openModalTo;
-            state.productModalOpen = true;
-        },
-        openCategoryModal: (state, action) => {
-            state.dataCategoryModal = action.payload.data;
-            state.openModalTo = action.payload.openModalTo;
-            state.categoryModalOpen = true;
-        },
-        closeInputModal: (state, action) => {
-            state.productModalOpen = false;
-            state.categoryModalOpen = false;
-            state.dataProductModal = null;
-            state.dataCategoryModal = null;
-        },
-        openDeleteProductModal: (state, action) => {
-            state.dataProductModal = action.payload.data;
-            state.deleteModalOpen = true;
-        },
-        openDeleteCategoryModal: (state, action) => {
-            state.dataCategoryModal = action.payload.data;
-            state.deleteModalOpen = true;
-        },
-        closeDeleteProductModal: (state, action) => {
-            state.deleteModalOpen = false;
-            state.dataProductModal = null;
-            state.dataCategoryModal = null;
-        },
-        closeDeleteCategoryModal: (state, action) => {
-            state.deleteModalOpen = false;
-            state.dataProductModal = null;
-            state.dataCategoryModal = null;
+        openModal: (state, action) => {
+            state.modalOpen = action.payload?.modalOpen;
+            state.openModalTo = action.payload?.openModalTo;
         },
         isNavigating: (state, action) => {
             state.navigating = !state.navigating;
         },
         openConfirmModal: (state, action) => {
-            state.confirmModalOpen = !state.confirmModalOpen;
+            state.confirmModalOpen = action.payload;
+        },
+        setDataConfirm: (state, action) => {
+            state.dataConfirm = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -72,16 +41,11 @@ export const LayoutReducer = createSlice({
 
 export const {
     openDrawer,
-    closeDrawer,
-    openCategoryModal,
-    openDeleteProductModal,
-    openDeleteCategoryModal,
-    openProductModal,
-    closeDeleteProductModal,
-    closeDeleteCategoryModal,
-    closeInputModal,
+    setDataModal,
+    openModal,
     isNavigating,
-    openConfirmModal
+    openConfirmModal,
+    setDataConfirm
 } = LayoutReducer.actions;
 
 export const selectLayout = (state: any) => state.layout;//reducer name

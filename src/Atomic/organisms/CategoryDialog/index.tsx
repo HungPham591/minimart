@@ -1,86 +1,141 @@
-import { Box } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { FormikProvider, useFormik } from 'formik';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CustomInput from '../../atoms/Input';
-import InputDialog from '../InputDialog';
-import { v4 as uuid } from 'uuid';
-import { closeInputModal, selectLayout } from '../../../reducers/LayoutReducer';
+import * as yup from 'yup';
 import Constants from '../../../constants/Constants';
-import Helpers from '../../../commons/utils/Helpers';
+import { openConfirmModal, openModal, selectLayout, setDataConfirm } from '../../../reducers/LayoutReducer';
+import CustomInput from '../../atoms/Input';
+
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(3),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
+
+
+export interface DialogTitleProps {
+    id: string;
+    children?: React.ReactNode;
+    onClose: () => void;
+}
+
+const BootstrapDialogTitle = (props: DialogTitleProps) => {
+    const { children, onClose, ...other } = props;
+
+    return (
+        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+            {children}
+            {onClose ? (
+                <IconButton
+                    aria-label="close"
+                    onClick={onClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
+            ) : null}
+        </DialogTitle>
+    );
+};
+
+const validationSchema = yup.object({
+    name: yup.string().required("Product name is required"),
+    description: yup.string().required("Product description is required"),
+})
 
 
 function CategoryDialog(props: any) {
     const dispatch = useDispatch();
-    const { categoryModalOpen, openModalTo, dataCategoryModal } = useSelector(selectLayout);
+    const { modalOpen, openModalTo, dataModal } = useSelector(selectLayout);
 
-    const [nameError, setNameError] = useState(false);
-    const [descriptionError, setDescriptionError] = useState(false);
 
-    const helperText = "Vui lòng nhập đúng kiểu dữ liệu và đầy đủ";
-
-    useEffect(() => {
-        setNameError(false);
-        setDescriptionError(false);
-    }, [categoryModalOpen])
+    const formikInitialValue = {
+        name: dataModal?.name ?? "",
+        description: dataModal?.description ?? "",
+    }
 
     const handleCloseButton = () => {
-        dispatch(closeInputModal(true));
-    }
-    const removeNullValueFromObject = (object: any) => {
-        Object.keys(object).forEach(key => {
-            if (object[key] === null) {
-                delete object[key];
-            }
-        });
-        return object;
-    }
-    const convertObjectToData = (object: any) => {
-        const newObject = removeNullValueFromObject(object);
-        return { ...dataCategoryModal, ...newObject };
+        dispatch(openModal({ modalOpen: null, openModalTo: null }));
     }
 
-    const checkForm = (name: any, description: any) => {
-        let error = false;
-        if (!name || Helpers.isNumeric(name)) { setNameError(true); error = true; } else setNameError(false);
-        if (!description || Helpers.isNumeric(description)) { setDescriptionError(true); error = true } else setDescriptionError(false);
-        return !error;
-    }
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
-        const { target } = e;
-        let { name, description } = target;
-        name = name.value;
-        description = description.value;
-        if (!checkForm(name, description)) return;
+    const handleSubmit = (data: any) => {
+        data = { ...data, id: dataModal?.id };
+        dispatch(setDataConfirm(data));
         if (openModalTo === Constants.OpenModalTo.CREATE) {
-            const data = {
-                id: uuid(),
-                name,
-                description
-            }
-            props?.handleConfirmButton({ ...data }, openModalTo);
+            dispatch(openConfirmModal(Constants.needToConfirm.ADD_CATEGORY))
         }
-        if (openModalTo === Constants.OpenModalTo.UPDATE && dataCategoryModal?.id) {
-            const data = {
-                id: dataCategoryModal?.id,
-                name,
-                description
-            }
-            props?.handleConfirmButton(convertObjectToData({ ...data }), openModalTo);
+        else {
+            dispatch(openConfirmModal(Constants.needToConfirm.UPDATE_CATEGORY))
         }
-        dispatch(closeInputModal(true));
     };
 
+
+    const formik = useFormik({
+        initialValues: formikInitialValue,
+        validationSchema: validationSchema,
+        onSubmit: handleSubmit,
+        enableReinitialize: true
+    })
+
     const title =
-        openModalTo === Constants.OpenModalTo.CREATE ? "Tạo mới danh mục sản phẩm" :
-            openModalTo === Constants.OpenModalTo.VIEW ? "Xem danh mục sản phẩm" : "Cập nhật danh mục sản phẩm";
+        openModalTo === Constants.OpenModalTo.CREATE ? "Tạo mới danh mục sản phẩm" : "Cập nhật danh mục sản phẩm";
 
     return (
-        <InputDialog title={title} readOnly={openModalTo === Constants.OpenModalTo.VIEW ? true : false} disableConfirm={(nameError || descriptionError)} open={categoryModalOpen} handleSubmit={handleSubmit} handleCloseButton={handleCloseButton}>
-            <CustomInput name="name" helperText={nameError ? helperText : ""} error={nameError} defaultValue={dataCategoryModal?.name} InputProps={{ readOnly: openModalTo === Constants.OpenModalTo.VIEW ? true : false }} label="Tên danh mục"></CustomInput>
-            <Box marginTop="10px" />
-            <CustomInput name="description" helperText={descriptionError ? helperText : ""} error={descriptionError} defaultValue={dataCategoryModal?.description} InputProps={{ readOnly: openModalTo === Constants.OpenModalTo.VIEW ? true : false }} label="Mô tả"></CustomInput>
-        </InputDialog>
+        <BootstrapDialog
+            onClose={handleCloseButton}
+            aria-labelledby="customized-dialog-title"
+            open={modalOpen === Constants.modalOpen.CATEGORY && (openModalTo === Constants.OpenModalTo.CREATE || openModalTo === Constants.OpenModalTo.UPDATE)}
+        >
+            <FormikProvider value={formik}>
+                <form onSubmit={formik.handleSubmit}>
+                    <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseButton}>
+                        {title}
+                    </BootstrapDialogTitle>
+                    <DialogContent dividers>
+                        <Box width='500px' maxWidth="70vw">
+                            <CustomInput
+                                name="name"
+                                onChange={formik.handleChange}
+                                error={formik.touched.name && Boolean(formik.errors.name)}
+                                helperText={formik.touched.name && formik.errors.name}
+                                value={formik.values.name}
+                                label="Tên danh mục sản phẩm"
+                            />
+                            <Box marginTop="10px" />
+                            <CustomInput
+                                multiline
+                                name="description"
+                                label="Mô tả"
+                                rows={3}
+                                error={formik.touched.description && Boolean(formik.errors.description)}
+                                helperText={formik.touched.description && formik.errors.description}
+                                onChange={formik.handleChange}
+                                value={formik.values.description}
+                            />
+                        </Box>
+                    </DialogContent>
+                    <DialogActions>
+                        <Box>
+                            <Button type='submit' color='error' variant='contained' autoFocus>
+                                Lưu
+                            </Button>
+                        </Box>
+                    </DialogActions>
+                </form>
+            </FormikProvider>
+        </BootstrapDialog>
     )
 }
 

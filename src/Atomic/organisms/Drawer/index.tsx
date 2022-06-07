@@ -9,12 +9,11 @@ import { CSSObject, styled, Theme } from '@mui/material/styles';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { closeDrawer, isNavigating, openDrawer, selectLayout } from '../../../reducers/LayoutReducer';
+import { isNavigating, openDrawer, selectLayout } from '../../../reducers/LayoutReducer';
 import BackendRoutes from '../../../routes/BackendRoutes';
 
 
 const drawerWidth = 240;
-const routes = Object.values(BackendRoutes);
 
 const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -54,6 +53,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
+const listButtonHoverStyle = {
+    backgroundColor: ""
+}
 
 function MiniDrawer() {
     const { drawerOpen } = useSelector(selectLayout);
@@ -63,10 +65,10 @@ function MiniDrawer() {
     const { pathname } = useLocation();
 
     const handleMouseOver = () => {
-        dispatch(openDrawer(false));
+        dispatch(openDrawer(true));
     }
     const handleMouseOut = () => {
-        dispatch(closeDrawer(false));
+        dispatch(openDrawer(false));
     }
 
     const checkRoute = (path: string) => {
@@ -84,7 +86,7 @@ function MiniDrawer() {
         return (
             <List>
                 {
-                    routes.map((value, index) => (
+                    BackendRoutes.map((value, index) => (
                         <Box key={index} padding="5px">
                             <ListItem sx={{ display: 'block' }} onClick={() => handleNavigateButtonClick(value?.path)} key={index} disablePadding>
                                 <ListItemButton sx={{ backgroundColor: (checkRoute(value?.path)) ? 'primary.main' : "white", justifyContent: drawerOpen ? 'initial' : 'center', px: 2.5, borderRadius: "10px" }}>

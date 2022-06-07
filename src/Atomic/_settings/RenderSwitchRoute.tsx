@@ -3,8 +3,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 const RenderSwitchRoute = (routes: any) => {
-
-    routes = Object.values(routes);
     return (
         <Routes>
             {

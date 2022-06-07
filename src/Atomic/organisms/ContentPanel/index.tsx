@@ -5,7 +5,7 @@ import CustomTable from "../../molecules/Table";
 
 function ContentPanel(props: any) {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const [page, setPage] = useState(1);
 
     const handlePagination = (e: any, page: number) => {
@@ -25,13 +25,19 @@ function ContentPanel(props: any) {
 
     return (
         <Container>
-            <Paper elevation={4}>
+            <Paper>
                 <Box padding="15px 30px">
                     <Box paddingBottom="20px" paddingTop="10px" display="flex" justifyContent='space-between' >
                         <Typography variant="h6" fontWeight={"bold"}>{props?.title}</Typography>
                         <Typography fontSize="18px" fontWeight="600">số lượng: {props?.loading ? "" : props?.tableData?.length}</Typography>
                     </Box>
-                    <CustomTable tableHeadAlign={props?.tableHeadAlign} tableCellMinWidth={props?.tableCellMinWidth} loading={props?.loading ? 1 : 0} header={props?.tableTitle} value={convertDataIntoTable(props?.tableData)} />
+                    <CustomTable
+                        tableHeadAlign={props?.tableHeadAlign}
+                        tableCellMinWidth={props?.tableCellMinWidth}
+                        loading={props?.loading ? 1 : 0}
+                        header={props?.tableTitle}
+                        value={convertDataIntoTable(props?.tableData)}
+                    />
                     <Box paddingTop="20px" display="flex" justifyContent={isMobile ? "space-around" : "right"}>
                         <Pagination count={getNumberOfPage()} page={page} onChange={handlePagination} />
                     </Box>

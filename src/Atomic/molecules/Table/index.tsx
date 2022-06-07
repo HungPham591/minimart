@@ -1,8 +1,7 @@
 
-import { Grid, Paper, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Grid, Paper, Skeleton, styled, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import CustomTextSkeleton from "../../atoms/TextSkeleton";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -40,7 +39,7 @@ function CustomTable(props: any) {
                 arrayElement.push(
                     <TableRow key={i}>
                         <TableCell>
-                            <CustomTextSkeleton />
+                            <Skeleton variant="text" animation="wave" />
                         </TableCell>
                     </TableRow>
                 )
@@ -49,7 +48,7 @@ function CustomTable(props: any) {
                     <TableRow key={i}>
                         {
                             props?.header.map((value: any, index: any) => (
-                                <TableCell key={index}><CustomTextSkeleton /></TableCell>
+                                <TableCell key={index}><Skeleton variant="text" animation="wave" /></TableCell>
                             ))
                         }
                     </TableRow>
@@ -71,7 +70,7 @@ function CustomTable(props: any) {
                                             {props?.header[index]}:
                                         </Typography>
                                     </Grid>
-                                    <Grid item>
+                                    <Grid lg={12} md={12} item>
                                         {value}
                                     </Grid>
                                 </Grid>

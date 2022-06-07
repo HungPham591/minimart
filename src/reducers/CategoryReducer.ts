@@ -13,14 +13,21 @@ export const CategoryReducer = createSlice({
     initialState,
     reducers: {
         sortCategory: (state, action) => {
-            const { name, sort } = action.payload;
-            if (name) {
-                state.data = state.data.filter(item => {
-                    return item?.name.indexOf(name) > -1;
-                })
+            const { search, typeOfSearch, filter } = action.payload;
+            if (!state?.data || state?.data?.length === 0) return;
+            if (search) {
+                if (typeOfSearch === 1) {
+                    state.data = state.data.filter(item => {
+                        return item?.name.indexOf(search) > -1;
+                    })
+                } else {
+                    state.data = state.data.filter(item => {
+                        return item?.id === parseInt(search);
+                    })
+                }
             }
-            if (sort) {
-                switch (sort) {
+            if (filter) {
+                switch (filter) {
                     case 1: state.data = Helpers.sortAsc(state.data, 'name'); break;
                     case 2: state.data = Helpers.sortDesc(state.data, 'name'); break;
                     case 3: state.data = Helpers.sortAsc(state.data, 'id'); break;

@@ -28,7 +28,7 @@ function PageTemplate(props: IPageTemplateProp) {
                     width: `calc(${theme.spacing(8)} + 1px)`,
                 }
             }}>
-                <LinearProgress style={navigating ? { display: 'block' } : { display: 'none' }} />
+                <LinearProgress style={navigating ? { display: 'block', position: "fixed", top: 0, right: 0, left: 0 } : { display: 'none' }} />
                 <Header />
                 {Body}
             </Box>

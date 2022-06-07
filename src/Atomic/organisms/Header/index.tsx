@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Box, Grid, Switch, Toolbar, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { AppBar, Avatar, Box, Grid, Switch, Toolbar, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectProfile } from '../../../reducers/ProfileReducer';
@@ -34,9 +34,11 @@ function Header(props: any) {
                     <Grid lg={7} md={7} xs={2} item></Grid>
                     <Grid lg={3} md={3} xs={5} display="flex" alignItems='center' justifyContent={isMobile ? "flex-end" : "space-around"} item>
                         <Box style={{ display: isMobile ? "none" : "block" }}>
-                            <Switch onChange={onThemeSwitchChange} checked={switchChecked} color="error" />
+                            <Tooltip title="theme">
+                                <Switch onChange={onThemeSwitchChange} checked={switchChecked} color="error" />
+                            </Tooltip>
                         </Box>
-                        <Typography style={{ display: isMobile ? "none" : "block" }} fontSize="17px" fontWeight="bold" noWrap>{data?.name}</Typography>
+                        <Typography style={{ display: isMobile ? "none" : "block" }} fontSize="16px" fontWeight="bold" noWrap>{data?.name}</Typography>
                         <Avatar alt='avatar' src={data?.image} />
                     </Grid>
                 </Grid>

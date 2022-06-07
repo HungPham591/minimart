@@ -88,7 +88,12 @@ function MiniDrawer() {
                 {
                     BackendRoutes.map((value, index) => (
                         <Box key={index} padding="5px">
-                            <ListItem sx={{ display: 'block' }} onClick={() => handleNavigateButtonClick(value?.path)} key={index} disablePadding>
+                            <ListItem
+                                sx={{ display: 'block' }}
+                                onClick={() => handleNavigateButtonClick(value?.path)}
+                                key={index}
+                                disablePadding
+                            >
                                 <ListItemButton sx={{ backgroundColor: (checkRoute(value?.path)) ? 'primary.main' : "white", justifyContent: drawerOpen ? 'initial' : 'center', px: 2.5, borderRadius: "10px" }}>
                                     <ListItemIcon sx={{ color: (checkRoute(value?.path)) ? 'white' : "grey", minWidth: 0, mr: drawerOpen ? 3 : 'auto', justifyContent: 'center' }}>
                                         {value?.icon}

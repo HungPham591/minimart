@@ -22,11 +22,12 @@ function PageTemplate(props: IPageTemplateProp) {
             <Box display={isMobile ? "none" : "block"}>
                 <Drawer />
             </Box>
-            <Box style={isMobile ? { paddingBottom: "20px" } : {
+            <Box style={isMobile ? { paddingBottom: "20px", minHeight: "100vh" } : {
                 paddingLeft: `calc(${theme.spacing(7)} + 1px)`,
                 [theme.breakpoints.up('sm')]: {
                     width: `calc(${theme.spacing(8)} + 1px)`,
-                }
+                },
+                minHeight: "100vh"
             }}>
                 <LinearProgress style={navigating ? { display: 'block', position: "fixed", top: 0, right: 0, left: 0 } : { display: 'none' }} />
                 <Header />

@@ -68,13 +68,31 @@ function CategoryPage(props: any) {
             valueArray.unshift(index + 1);
             valueArray.push(
                 <Box display="flex" justifyContent="space-between">
-                    <IconButton onClick={() => handleViewButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
+                    <IconButton
+                        onClick={() => handleViewButton(value)}
+                        size="medium"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                    >
                         <Visibility />
                     </IconButton>
-                    <IconButton onClick={() => handleUpdateButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
+                    <IconButton
+                        onClick={() => handleUpdateButton(value)}
+                        size="medium"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                    >
                         <Edit />
                     </IconButton>
-                    <IconButton onClick={() => handleDeleteButton(value)} size="medium" edge="start" color="inherit" aria-label="menu">
+                    <IconButton
+                        onClick={() => handleDeleteButton(value)}
+                        size="medium"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                    >
                         <Delete />
                     </IconButton>
                 </Box>

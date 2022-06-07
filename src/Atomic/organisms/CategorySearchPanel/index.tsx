@@ -89,7 +89,12 @@ function SearchPanel(props: any) {
                                     />
                                 </Grid>
                                 <Grid item lg={2} md={12} xs={12}>
-                                    <Button variant="contained" fullWidth={true} type="submit" style={{ height: "100%" }}>
+                                    <Button
+                                        variant="contained"
+                                        fullWidth={true}
+                                        type="submit"
+                                        style={{ height: "100%" }}
+                                    >
                                         TÌM KIẾM
                                     </Button>
                                 </Grid>

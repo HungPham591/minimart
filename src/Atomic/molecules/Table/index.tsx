@@ -61,9 +61,12 @@ function CustomTable(props: any) {
         return props?.value.map((value: any, index: any) => (
             <StyledTableRow key={index}>
                 {
-                    value.map((value: any, index: any) => (
+                    value?.map((value: any, index: any) => (
                         <TableCell style={isMobile ? { display: "inline" } : { display: "table-cell" }} key={index}>
-                            <Box style={isMobile ? { padding: "0 15px" } : { minWidth: props?.tableCellMinWidth[index] }} fontWeight={index === 0 ? "bold" : "normal"}>
+                            <Box
+                                style={isMobile ? { padding: "0 15px" } : { minWidth: props?.tableCellMinWidth[index] }}
+                                fontWeight={index === 0 ? "bold" : "normal"}
+                            >
                                 <Grid display={"flex"} justifyContent="space-between" container>
                                     <Grid style={{ display: isMobile ? "inline" : "none" }} item>
                                         <Typography fontWeight="bold">
@@ -92,6 +95,16 @@ function CustomTable(props: any) {
                 <TableBody>
                     {
                         props?.loading ? tableSkeletonLoading() : tableData()
+                    }
+                    {
+                        props?.value?.length === 0 && !props?.loading ?
+                            <TableRow>
+                                <TableCell colSpan={props?.header?.length}>
+                                    <Typography align="center">No data!!!</Typography>
+                                </TableCell>
+                            </TableRow>
+                            :
+                            <></>
                     }
                 </TableBody>
             </Table>

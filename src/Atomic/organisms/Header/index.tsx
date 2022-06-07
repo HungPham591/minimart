@@ -26,19 +26,42 @@ function Header(props: any) {
         <AppBar>
             <Toolbar>
                 <Grid spacing={3} container>
-                    <Grid lg={2} md={2} xs={5} display="flex" alignItems='center' justifyContent="space-between" item>
+                    <Grid
+                        lg={2}
+                        md={2}
+                        xs={5}
+                        display="flex"
+                        alignItems='center'
+                        justifyContent="space-between"
+                        item
+                    >
                         <Typography fontWeight="bold" variant="h6" component="div">
                             DASHBOARD
                         </Typography>
                     </Grid>
                     <Grid lg={7} md={7} xs={2} item></Grid>
-                    <Grid lg={3} md={3} xs={5} display="flex" alignItems='center' justifyContent={isMobile ? "flex-end" : "space-around"} item>
+                    <Grid
+                        lg={3}
+                        md={3}
+                        xs={5}
+                        display="flex"
+                        alignItems='center'
+                        justifyContent={isMobile ? "flex-end" : "space-around"}
+                        item
+                    >
                         <Box style={{ display: isMobile ? "none" : "block" }}>
                             <Tooltip title="theme">
                                 <Switch onChange={onThemeSwitchChange} checked={switchChecked} color="error" />
                             </Tooltip>
                         </Box>
-                        <Typography style={{ display: isMobile ? "none" : "block" }} fontSize="16px" fontWeight="bold" noWrap>{data?.name}</Typography>
+                        <Typography
+                            style={{ display: isMobile ? "none" : "block" }}
+                            fontSize="16px"
+                            fontWeight="bold"
+                            noWrap
+                        >
+                            {data?.name}
+                        </Typography>
                         <Avatar alt='avatar' src={data?.image} />
                     </Grid>
                 </Grid>

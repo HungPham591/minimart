@@ -1,8 +1,7 @@
-import { BottomNavigation, BottomNavigationAction, Box, List, ListItem, ListItemButton, ListItemIcon, Paper } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Constants from '../../../constants/Constants';
 import { isNavigating } from '../../../reducers/LayoutReducer';
 import BackendRoutes from '../../../routes/BackendRoutes';
 
@@ -31,7 +30,12 @@ function BottomNavigationBar(props: any) {
             <BottomNavigation value={pathname} onChange={handleChange}>
                 {
                     routes.map((value, index) => (
-                        <BottomNavigationAction key={index} label={value?.label} sx={{ color: (checkRoute(value?.path)) ? 'primary.main' : "grey" }} value={value?.path} icon={value?.icon} />
+                        <BottomNavigationAction
+                            key={index}
+                            label={value?.label}
+                            sx={{ color: (checkRoute(value?.path)) ? 'primary.main' : "grey" }}
+                            value={value?.path} icon={value?.icon}
+                        />
                     )
                     )
                 }

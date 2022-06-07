@@ -15,7 +15,12 @@ function TitlePanel(props: any) {
                             Danh sách {props?.title}
                         </Typography>
                         <Box display="flex" alignItems="center">
-                            <Button id="addbutton" onClick={props?.handleCreateButton} variant="contained" startIcon={<AddIcon id="addicon" />}>Thêm</Button>
+                            <Button
+                                id="addbutton"
+                                onClick={props?.handleCreateButton} variant="contained" startIcon={<AddIcon id="addicon" />}
+                            >
+                                Thêm
+                            </Button>
                         </Box>
                     </Box>
                 </Container>

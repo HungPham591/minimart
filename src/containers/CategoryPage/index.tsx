@@ -67,7 +67,7 @@ function CategoryPage(props: any) {
             valueArray.shift();
             valueArray.unshift(index + 1);
             valueArray.push(
-                <Box display="flex" justifyContent="space-between">
+                <Box display="flex" justifyContent="space-between" minWidth={"200px"}>
                     <IconButton
                         onClick={() => handleViewButton(value)}
                         size="medium"

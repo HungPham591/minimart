@@ -39,23 +39,22 @@ function Header(props: any) {
                             DASHBOARD
                         </Typography>
                     </Grid>
-                    <Grid lg={7} md={7} xs={2} item></Grid>
+                    <Grid lg={7} md={7} xs={1} item></Grid>
                     <Grid
                         lg={3}
                         md={3}
-                        xs={5}
+                        xs={6}
                         display="flex"
                         alignItems='center'
                         justifyContent={isMobile ? "flex-end" : "space-around"}
                         item
                     >
-                        <Box style={{ display: isMobile ? "none" : "block" }}>
+                        <Box>
                             <Tooltip title="theme">
                                 <Switch onChange={onThemeSwitchChange} checked={switchChecked} color="error" />
                             </Tooltip>
                         </Box>
                         <Typography
-                            style={{ display: isMobile ? "none" : "block" }}
                             fontSize="16px"
                             fontWeight="bold"
                             noWrap

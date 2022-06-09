@@ -89,13 +89,13 @@ function ProductPage(props: any) {
         return dataProduct?.map((value: any, index: any) => {
             const tempValue = { ...value };
             tempValue.category = dataCategory.find((element: any) => element.id === tempValue.category)?.name;
-            tempValue.image = <CustomImage src={tempValue?.image} />
+            tempValue.image = (<Box width={"200px"} height={"150px"}><CustomImage src={tempValue?.image} /></Box>)
             tempValue.status = tempValue?.status ? <Chip label="Còn hàng" style={{ borderColor: "#1a73e8", color: "#1a73e8" }} variant="outlined" /> : <Chip label="Hết hàng" style={{ borderColor: "#FF385C", color: "#FF385C" }} variant="outlined" />;
             const valueArray: Array<any> = Object.values(tempValue);
             valueArray.shift();
             valueArray.unshift(index + 1);
             valueArray.push(
-                <Box display="flex" justifyContent="space-between">
+                <Box display="flex" justifyContent="space-between" minWidth={"200px"}>
                     <IconButton
                         onClick={() => handleViewButton(value)}
                         size="medium"

@@ -1,11 +1,12 @@
+import { SearchOutlined } from '@mui/icons-material';
 import { Box, Button, Grid, Paper } from '@mui/material';
 import { Container } from '@mui/system';
-import { FormikProvider, useFormik } from 'formik';
 import React from 'react';
+import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { sortCategory } from '../../../reducers/CategoryReducer';
-import CustomInput from '../../atoms/SearchInput';
 import CustomDropdown from '../../molecules/Dropdown';
+import CustomTextInput from '../../molecules/TextInput';
 
 const filterItem = [
     {
@@ -39,7 +40,7 @@ const typeOfSearchItem = [
         label: "Tìm kiếm theo id"
     }
 ];
-const formikInitialValue = {
+const defaultValues = {
     search: "",
     filter: filterItem[0].value,
     typeOfSearch: typeOfSearchItem[0].value
@@ -48,60 +49,54 @@ const formikInitialValue = {
 
 function SearchPanel(props: any) {
     const dispatch = useDispatch();
-    const handleSubmit = (data: any) => {
+    const onSubmit = (data: any) => {
         dispatch(sortCategory(data));
     }
-    const formik = useFormik({
-        initialValues: formikInitialValue,
-        onSubmit: handleSubmit
-    })
+
+    const { handleSubmit, control } = useForm({ defaultValues });
+
     return (
         <Paper>
             <Box paddingY="12px">
                 <Container>
-                    <FormikProvider value={formik}>
-                        <form onSubmit={formik.handleSubmit}>
-                            <Grid spacing={3} container>
-                                <Grid item lg={4} md={12} xs={12}>
-                                    <CustomInput
-                                        label="danh mục sản phẩm"
-                                        value={formik.values.search}
-                                        name="search"
-                                        onChange={formik.handleChange}
-                                    />
-                                </Grid>
-                                <Grid item lg={3} md={12} xs={12}>
-                                    <CustomDropdown
-                                        value={formik.values.typeOfSearch}
-                                        title="Sắp xếp"
-                                        name="typeOfSearch"
-                                        data={typeOfSearchItem}
-                                        onChange={formik.handleChange}
-                                    />
-                                </Grid>
-                                <Grid item lg={3} md={12} xs={12}>
-                                    <CustomDropdown
-                                        value={formik.values.filter}
-                                        title="Sắp xếp"
-                                        name="filter"
-                                        data={filterItem}
-                                        onChange={formik.handleChange}
-                                    />
-                                </Grid>
-                                <Grid item lg={2} md={12} xs={12}>
-                                    <Button
-                                        variant="contained"
-                                        fullWidth={true}
-                                        type="submit"
-                                        style={{ height: "100%" }}
-                                    >
-                                        TÌM KIẾM
-                                    </Button>
-                                </Grid>
-                            </Grid>
-
-                        </form>
-                    </FormikProvider>
+                    <Grid spacing={3} container>
+                        <Grid item lg={4} md={12} xs={12}>
+                            <CustomTextInput
+                                name="search"
+                                control={control}
+                                label="danh mục sản phẩm"
+                                InputProps={{
+                                    endAdornment: <SearchOutlined />
+                                }}
+                            />
+                        </Grid>
+                        <Grid item lg={3} md={12} xs={12}>
+                            <CustomDropdown
+                                title="Sắp xếp"
+                                name="typeOfSearch"
+                                data={typeOfSearchItem}
+                                control={control}
+                            />
+                        </Grid>
+                        <Grid item lg={3} md={12} xs={12}>
+                            <CustomDropdown
+                                title="Sắp xếp"
+                                name="filter"
+                                data={filterItem}
+                                control={control}
+                            />
+                        </Grid>
+                        <Grid item lg={2} md={12} xs={12}>
+                            <Button
+                                variant="contained"
+                                fullWidth={true}
+                                onClick={handleSubmit(onSubmit)}
+                                style={{ height: "100%" }}
+                            >
+                                TÌM KIẾM
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Container>
             </Box>
         </Paper>

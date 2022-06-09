@@ -1,23 +1,34 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { Field } from 'formik';
 import React from 'react';
-import FormikSelect from '../../atoms/FormikSelect';
+import { Controller } from "react-hook-form";
 
 
 function CustomDropdown(props: any) {
-  return (
-    <FormControl fullWidth>
-      <InputLabel style={{ backgroundColor: "white" }}>{props?.title}</InputLabel>
-      <Field name={props?.name} component={FormikSelect}>
-        {
-          props?.data ? props?.data.map((value: any, index: any) => (
-            <MenuItem value={value.value} key={index}>{value.label}</MenuItem>
-          )
-          ) : null
-        }
-      </Field>
-    </FormControl>
-  )
+	const { name, control, data, title } = props;
+	const generateSelectOptions = () => {
+		return data.map((option: any) => {
+			return (
+				<MenuItem key={option.value} value={option.value}>
+					{option.label}
+				</MenuItem>
+			);
+		});
+	};
+
+	return (
+		<FormControl fullWidth>
+			<InputLabel style={{ backgroundColor: "white" }}>{title}</InputLabel>
+			<Controller
+				control={control}
+				name={name}
+				render={({ field: { onChange, value } }) => (
+					<Select onChange={onChange} value={value}>
+						{generateSelectOptions()}
+					</Select>
+				)}
+			/>
+		</FormControl>
+	)
 }
 
 

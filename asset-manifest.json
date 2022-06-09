@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "./static/css/main.1377390b.css",
-    "main.js": "./static/js/main.70187cb7.js",
-    "static/js/787.28cb0dcd.chunk.js": "./static/js/787.28cb0dcd.chunk.js",
-    "static/media/background.jpg": "./static/media/background.4d8792c0a1961ad1e19b.jpg",
-    "index.html": "./index.html",
-    "main.1377390b.css.map": "./static/css/main.1377390b.css.map",
-    "main.70187cb7.js.map": "./static/js/main.70187cb7.js.map",
-    "787.28cb0dcd.chunk.js.map": "./static/js/787.28cb0dcd.chunk.js.map"
+    "main.css": "https://hungpham591.github.io/minimart/static/css/main.ad06c7b1.css",
+    "main.js": "https://hungpham591.github.io/minimart/static/js/main.18ac4f2a.js",
+    "static/js/787.28cb0dcd.chunk.js": "https://hungpham591.github.io/minimart/static/js/787.28cb0dcd.chunk.js",
+    "index.html": "https://hungpham591.github.io/minimart/index.html",
+    "main.ad06c7b1.css.map": "https://hungpham591.github.io/minimart/static/css/main.ad06c7b1.css.map",
+    "main.18ac4f2a.js.map": "https://hungpham591.github.io/minimart/static/js/main.18ac4f2a.js.map",
+    "787.28cb0dcd.chunk.js.map": "https://hungpham591.github.io/minimart/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1377390b.css",
-    "static/js/main.70187cb7.js"
+    "static/css/main.ad06c7b1.css",
+    "static/js/main.18ac4f2a.js"
   ]
 }

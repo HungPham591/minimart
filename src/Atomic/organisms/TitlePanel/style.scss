@@ -1,0 +1,17 @@
+#titlepanel {
+    #addbutton {
+        &:hover {
+            #addicon {
+                transition: all ease-in-out 0.5s;
+                transform: rotate(90deg);
+            }
+        }
+
+        &:not(:hover) {
+            #addicon {
+                transition: all ease-in-out 0.5s;
+                transform: rotate(-90deg);
+            }
+        }
+    }
+}

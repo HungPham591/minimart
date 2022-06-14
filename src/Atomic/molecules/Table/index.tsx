@@ -62,7 +62,7 @@ function CustomTable(props: any) {
             <StyledTableRow key={index}>
                 {
                     value?.map((value: any, index: any) => (
-                        <TableCell style={isMobile ? { display: "inline" } : { display: "table-cell" }} key={index}>
+                        <TableCell style={isMobile ? { display: "inline", border: 0 } : { display: "table-cell", border: 0 }} align={props?.tableHeadAlign[index]} key={index}>
                             <Box
                                 style={isMobile ? { padding: "0 15px" } : { minWidth: props?.tableCellMinWidth[index] }}
                                 fontWeight={index === 0 ? "bold" : "normal"}

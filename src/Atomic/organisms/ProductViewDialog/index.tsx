@@ -62,6 +62,9 @@ function ProductDialog(props: any) {
     const handleCloseButton = () => {
         dispatch(openModal({ modalOpen: null, openModalTo: null }));
     }
+    const findCategoryName = (id: any) => {
+        return dataCategory.find((item: any) => item.id === id)?.name;
+    }
 
     return (
         <BootstrapDialog
@@ -75,36 +78,36 @@ function ProductDialog(props: any) {
             <DialogContent dividers>
                 <Box width='500px' maxWidth="70vw">
                     <Grid container spacing={3}>
-                        <Grid lg={12} display="flex" justifyContent={"center"} height="150px" item>
+                        <Grid lg={12} md={12} xs={12} display="flex" justifyContent={"center"} height="150px" item>
                             <Box height="100%" width={"200px"}>
                                 <CustomImage src={dataModal?.image} />
                             </Box>
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={6} item>
                             <Typography fontWeight="bold">ID</Typography>
                             <Typography>{dataModal?.id}</Typography>
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={6} item>
                             <Typography fontWeight="bold">Tên sản phẩm</Typography>
                             <Typography>{dataModal?.name}</Typography>
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={6} item>
                             <Typography fontWeight="bold">Số lượng</Typography>
                             <Typography>{dataModal?.number}</Typography>
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={6} item>
                             <Typography fontWeight="bold">Danh mục</Typography>
-                            <Typography>{dataCategory[dataModal?.category]?.name}</Typography>
+                            <Typography>{findCategoryName(dataModal?.category)}</Typography>
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={6} item>
                             <Typography fontWeight="bold">Khối lượng</Typography>
                             <Typography>{dataModal?.weight}</Typography>
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={6} item>
                             <Typography fontWeight="bold">Trạng thái</Typography>
                             <Typography>{dataModal?.status ? "Còn hàng" : "Hết hàng"}</Typography>
                         </Grid>
-                        <Grid lg={12} xs={12} item>
+                        <Grid lg={12} md={12} xs={12} item>
                             <Typography fontWeight="bold">Mô tả</Typography>
                             <Typography>{dataModal?.description}</Typography>
                         </Grid>

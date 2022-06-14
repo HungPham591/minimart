@@ -5,9 +5,11 @@ import { styled } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuid } from 'uuid';
 import * as yup from 'yup';
+import { addCategoryRequest, updateCategoryRequest } from '../../../actions/CategoryAction';
 import Constants from '../../../constants/Constants';
-import { openConfirmModal, openModal, selectLayout, setDataConfirm, setDataModal } from '../../../reducers/LayoutReducer';
+import { openModal, selectLayout, setDataModal } from '../../../reducers/LayoutReducer';
 import CustomTextInput from '../../molecules/TextInput';
 
 
@@ -56,7 +58,14 @@ const validationSchema = yup.object({
     description: yup.string().required(),
 })
 
-
+const convertCategoryToObject = (object: any) => {
+    const newObject = {
+        id: object?.id ?? uuid(),
+        name: object?.name,
+        description: object?.description
+    }
+    return newObject;
+}
 
 function CategoryDialog(props: any) {
     const dispatch = useDispatch();
@@ -86,12 +95,16 @@ function CategoryDialog(props: any) {
 
     const onSubmit = (data: any) => {
         data = { ...data, id: dataModal?.id };
-        dispatch(setDataConfirm(data));
+        // dispatch(setDataConfirm(data));
         if (openModalTo === Constants.OpenModalTo.CREATE) {
-            dispatch(openConfirmModal(Constants.needToConfirm.ADD_CATEGORY))
+            // dispatch(openConfirmModal(Constants.needToConfirm.ADD_CATEGORY))
+            addCategory(data);
+            handleCloseButton();
         }
         else {
-            dispatch(openConfirmModal(Constants.needToConfirm.UPDATE_CATEGORY))
+            updateCategory(data);
+            handleCloseButton();
+            // dispatch(openConfirmModal(Constants.needToConfirm.UPDATE_CATEGORY))
         }
     };
     useEffect(() => {
@@ -100,6 +113,15 @@ function CategoryDialog(props: any) {
         }
     }, [openModalTo])
 
+    const addCategory = (formData: any) => {
+        const data = convertCategoryToObject(formData);
+        dispatch(addCategoryRequest(data));
+    }
+
+    const updateCategory = (formData: any) => {
+        const data = convertCategoryToObject(formData);
+        dispatch(updateCategoryRequest(data));
+    }
 
     return (
         <BootstrapDialog

@@ -39,8 +39,8 @@ const tableHeadAlign = [
     "left",
     "center",
     "left",
-    "left",
-    "left",
+    "right",
+    "right",
     "center",
     "center"
 ]
@@ -52,9 +52,9 @@ const tableCellMinWidth = [
     "100px",
     "200px",
     "200px",
-    "0px",
-    "0px",
-    "0px",
+    "100px",
+    "100px",
+    "200px",
     "200px",
 ]
 

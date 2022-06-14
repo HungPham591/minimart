@@ -33,11 +33,11 @@ const filterItem = [
 const typeOfSearchItem = [
     {
         value: 1,
-        label: "Tìm kiếm theo tên"
+        label: "Theo tên"
     },
     {
         value: 2,
-        label: "Tìm kiếm theo id"
+        label: "Theo id"
     }
 ];
 const defaultValues = {
@@ -82,7 +82,7 @@ function SearchPanel(props: any) {
                         </Grid>
                         <Grid item lg={3} md={12} xs={12}>
                             <CustomDropdown
-                                title="Sắp xếp"
+                                title="Tìm kiếm theo"
                                 name="typeOfSearch"
                                 data={typeOfSearchItem}
                                 control={control}

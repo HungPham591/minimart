@@ -11,10 +11,12 @@ import { styled } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
 import { useForm, useWatch } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuid } from 'uuid';
 import * as yup from 'yup';
+import { addProductRequest, updateProductRequest } from '../../../actions/ProductAction';
 import Constants from '../../../constants/Constants';
 import { selectCategory } from '../../../reducers/CategoryReducer';
-import { openConfirmModal, openModal, selectLayout, setDataConfirm, setDataModal } from '../../../reducers/LayoutReducer';
+import { openModal, selectLayout, setDataModal } from '../../../reducers/LayoutReducer';
 import CustomImage from '../../atoms/Image';
 import CustomDropdown from '../../molecules/Dropdown';
 import CustomTextInput from '../../molecules/TextInput';
@@ -33,6 +35,20 @@ export interface DialogTitleProps {
     id: string;
     children?: React.ReactNode;
     onClose: () => void;
+}
+
+const convertProductToObject = (object: any) => {
+    const newObject = {
+        id: object?.id ?? uuid(),
+        name: object?.name,
+        category: object?.category,
+        image: object?.image,
+        description: object?.description,
+        number: object?.number,
+        weight: object?.weight,
+        status: object?.status
+    }
+    return newObject;
 }
 
 const BootstrapDialogTitle = (props: DialogTitleProps) => {
@@ -142,19 +158,33 @@ function ProductDialog(props: any) {
 
     const onSubmit = (data: any) => {
         data = { ...data, id: dataModal?.id };
-        dispatch(setDataConfirm(data));
+        // dispatch(setDataConfirm(data));
         if (openModalTo === Constants.OpenModalTo.CREATE) {
-            dispatch(openConfirmModal(Constants.needToConfirm.ADD_PRODUCT))
+            // dispatch(openConfirmModal(Constants.needToConfirm.ADD_PRODUCT))
+            addProduct(data);
+            handleCloseButton();
         }
         else {
-            dispatch(openConfirmModal(Constants.needToConfirm.UPDATE_PRODUCT))
+            // dispatch(openConfirmModal(Constants.needToConfirm.UPDATE_PRODUCT))
+            updateProduct(data);
+            handleCloseButton();
         }
     };
     useEffect(() => {
         if (openModalTo) {
             setTitle(openModalTo === Constants.OpenModalTo.CREATE ? "Tạo mới sản phẩm" : "Cập nhật sản phẩm");
         }
-    }, [openModalTo])
+    }, [openModalTo]);
+
+    const addProduct = (formData: any) => {
+        const data = convertProductToObject(formData);
+        dispatch(addProductRequest(data));
+    }
+
+    const updateProduct = (formData: any) => {
+        const data = convertProductToObject(formData);
+        dispatch(updateProductRequest(data));
+    }
 
 
     return (
@@ -169,12 +199,12 @@ function ProductDialog(props: any) {
             <DialogContent dividers>
                 <Box width='500px' maxWidth="70vw">
                     <Grid container spacing={3}>
-                        <Grid lg={12} display="flex" justifyContent={"center"} height="150px" item>
+                        <Grid lg={12} md={12} xs={12} display="flex" justifyContent={"center"} height="150px" item>
                             <Box height="100%" width={"200px"}>
                                 <CustomImage src={imageLink} />
                             </Box>
                         </Grid>
-                        <Grid lg={12} xs={12} item>
+                        <Grid lg={12} md={12} xs={12} item>
                             <CustomTextInput
                                 name="name"
                                 errors={errors}
@@ -182,7 +212,7 @@ function ProductDialog(props: any) {
                                 label="Tên sản phẩm"
                             />
                         </Grid>
-                        <Grid lg={12} xs={12} item>
+                        <Grid lg={12} md={12} xs={12} item>
                             <CustomTextInput
                                 name="image"
                                 control={control}
@@ -190,7 +220,7 @@ function ProductDialog(props: any) {
                                 label="Ảnh"
                             />
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={12} item>
                             <CustomTextInput
                                 name="number"
                                 control={control}
@@ -198,7 +228,7 @@ function ProductDialog(props: any) {
                                 label="Số lượng"
                             />
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={12} item>
                             <CustomDropdown
                                 title="Danh mục"
                                 name="category"
@@ -206,7 +236,7 @@ function ProductDialog(props: any) {
                                 control={control}
                             />
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={12} item>
                             <CustomTextInput
                                 name="weight"
                                 control={control}
@@ -214,7 +244,7 @@ function ProductDialog(props: any) {
                                 label="Khối lượng"
                             />
                         </Grid>
-                        <Grid lg={6} xs={12} item>
+                        <Grid lg={6} md={6} xs={12} item>
                             <CustomDropdown
                                 name="status"
                                 title="Trạng thái"
@@ -222,7 +252,7 @@ function ProductDialog(props: any) {
                                 control={control}
                             />
                         </Grid>
-                        <Grid lg={12} xs={12} item>
+                        <Grid lg={12} md={12} xs={12} item>
                             <CustomTextInput
                                 multiline
                                 name="description"
